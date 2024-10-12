@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Conexion.ConexionBD;
 import Controlador.ControladorCContado;
 import Modelo.Contado;
 import Modelo.Venta;
@@ -68,6 +69,10 @@ public class CContado extends javax.swing.JFrame {
         txareaResumen = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
         lblNetoPago = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,7 +185,7 @@ public class CContado extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ITEM", "DESCRIPCION DEL PRODUCTO", "CANTIDAD", "PRECIO", "SUBTOTAL"
+                "ITEM", "DESCRIPCION", "CANTIDAD", "PRECIO", "SUBTOTAL"
             }
         ));
         jScrollPane1.setViewportView(tablaProductos);
@@ -197,6 +202,34 @@ public class CContado extends javax.swing.JFrame {
         jLabel9.setText("NETO A PAGAR");
 
         lblNetoPago.setFont(new java.awt.Font("Segoe UI Historic", 1, 36)); // NOI18N
+
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnListar.setText("LISTAR");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -224,11 +257,25 @@ public class CContado extends javax.swing.JFrame {
                             .addComponent(lblHoraActual, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(44, 44, 44))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardar)
+                                .addGap(90, 90, 90)
+                                .addComponent(btnListar)
+                                .addGap(72, 72, 72))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(lblNetoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(lblNetoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnActualizar)
+                                .addGap(57, 57, 57)
+                                .addComponent(btnEliminar)
+                                .addGap(75, 75, 75)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -253,18 +300,22 @@ public class CContado extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnListar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(lblNetoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addComponent(lblNetoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -274,6 +325,22 @@ public class CContado extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         controlador.adquirirProducto();
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        controlador.guardarPersona();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        controlador.listarVentas();
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        controlador.actualizarVenta();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        controlador.eliminarVenta();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,12 +361,6 @@ public class CContado extends javax.swing.JFrame {
         new javax.swing.Timer(1000, e -> setHoraActual()).start();
     }
 
-    private void limpiarCampos() {
-        txtCliente.setText("");
-        txtRuc.setText("");
-        txtCantidad.setText("");
-        cboProductos.setSelectedIndex(0);
-    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -378,7 +439,11 @@ public class CContado extends javax.swing.JFrame {
     }
 
     public JLabel getLblNetoPago() {
-        return lblNetoPago; 
+        return lblNetoPago;
+    }
+    
+    public JLabel getLblFechaActual() {
+        return lblFechaActual;
     }
 
     public void setTxareaResumen(String resumen) {
@@ -387,7 +452,11 @@ public class CContado extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnListar;
     private javax.swing.JComboBox<String> cboProductos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
